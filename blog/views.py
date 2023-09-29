@@ -50,6 +50,7 @@ class UpdatePostView(UpdateView):
     model=Post 
     template_name='updatepost.html' 
     form_class=UpdatePostForm
+    success_url=reverse_lazy('home')
 
 class DeletePostView(DeleteView):
     model=Post 

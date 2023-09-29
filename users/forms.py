@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,UserCh
 from django.contrib.auth.models import User;
 from django import forms;
 
-class EditPasswordForm():
+class EditPasswordForm(PasswordChangeForm):
     old_password=forms.CharField(max_length=255,widget=forms.PasswordInput(attrs={'class':'form-control'}))
     new_password1=forms.CharField(max_length=255,widget=forms.PasswordInput(attrs={'class':'form-control'}))
     new_password2=forms.CharField(max_length=255,widget=forms.PasswordInput(attrs={'class':'form-control'}))
