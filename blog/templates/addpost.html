@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title%} Write Article   - {% endblock%}
+{% block content %}
+{% load static %}
+<div class="row justify-content-center pb-4">
+<div class="col-11">    
+<p class='display-5'>Add New Article</p>
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{{form.media}}
+{{form.as_p}}
+<button class='btn bg-primary-subtle text-primary'>Save Article</button>
+</form>
+</div>
+</div>
+<p class='text-end'><a href='/home' class="btn btn-secondary">Home</a></p>   
+</div>
+
+<script>
+    document.getElementById('id_author').value={{user.id}}
+ </script>
+
+{% endblock %}
+

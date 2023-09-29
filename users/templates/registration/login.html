@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title%} Login   - {% endblock%}
+{% block content %}
+{% load static %}
+
+<div class="row justify-content-center pb-4">
+<div class="col-5">    
+<p class='display-5'>Sign In Now ! </p>
+<form method="post">
+{% csrf_token %}
+<div class="mb-3">
+    <label for="id_username">Username:</label>
+    <input type="text" name="username" class="form-control" maxlength="150" required id="id_username">
+  </div>
+  <div class="mb-3">
+
+  <label for="id_password">Password:</label>
+  <input type="password" name="password" class="form-control" required id="id_password">
+  </div>
+<button class='btn bg-primary-subtle text-primary'>Login</button>
+</form>
+<p class='text-center'><a href='/home' class="btn btn-secondary">Home</a></p>   
+</div>
+</div>
+</div>
+ 
+{% endblock %}
+

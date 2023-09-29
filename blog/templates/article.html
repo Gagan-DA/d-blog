@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title%}{{post.title}} - {% endblock%}
+{% block content %}
+{% load static %}
+        <div class="row justify-content-center pb-4">
+        <div class="col-11">    
+<p class='display-5'>{{post.title}}</p>
+<img src='../{{post.postimage}}' class='w-75' height='350px'>
+<p class='fs-6'>Category :<a href="{% url "category" post.category%}">{{post.category}}</a></p>
+<p>By {{post.author.first_name}} {{post.author.last_name}} | On: {{post.postdate}} </p>
+<div>{{post.content|safe}}</div>
+
+{% if user.is_authenticated and user.id is post.author.id  %}
+<p class='mt-4'>
+<a href="{% url "updatepost" post.pk %}" class="btn bg-primary-subtle text-primary">
+    Edit Article
+</a>
+<a href="{% url "deletepost" post.pk %}" class="btn bg-primary-subtle text-primary">
+    Delete Article
+</a>
+<p>
+<hr>
+<div> 
+</div>
+{% endif %}
+
+
+<div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-3 text-center">
+        {% if post.author.profile.userimage %}
+        <img src="{{post.author.profile.userimage.url}}" class="w-100 rounded-start"
+        height='200px'>
+        {% else %}
+        <img src="{% static 'default_profile_pic.jpg' %}" class="w-75 rounded-start"
+        height='200px'>
+    {% endif %}
+      </div>
+      <div class="col-md-9">
+        <div class="card-body">
+          <h5 class="card-title">About {{post.author.first_name}} {{post.author.last_name}}</h5>
+          <p class="card-text"><small class="text-body-secondary">
+            <a href='{{post.author.profile.website_url}}' target='_blank'>Website</a> |
+            <a href='{{post.author.profile.facebook_url}}' target='_blank'>Facebook</a> |
+            <a href='{{post.author.profile.instagram_url}}' target='_blank'>Instagram</a> |
+            <a href='{{post.author.profile.twiiter_url}}' target='_blank'>Twitter</a> 
+          </small></p>
+          <p class="card-text">{{post.author.profile.bio}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <p class='display-6'>Comments</p>
+
+  {% if not post.comments.all %}
+  <div class='alert alert-info mt-3 mb-3 p-3'> No Comments Yet !!! </div>
+  {% else %}
+  {% for comment in post.comments.all %}
+  <div class='alert alert-light mt-3 mb-3 p-3'> 
+  <p class='text-end text-muted fw-bold'>{{comment.first_name}} {{comment.last_name}} - {{comment.postdate}} </p>
+  <p>{{comment.comment}}</p>
+  </div>
+  {% endfor %}
+  {% endif %}
+  
+  <p class='display-6'>Post Comment</p>
+  <form method="POST" action="{% url "comment" %}"" >
+  {% csrf_token %}
+  {{form.as_p}}
+  <button class='btn bg-primary-subtle text-primary'>Post</button>
+  </form>
+  <br> <hr>
+{% if user.is_authenticated%}
+<form method="POST" action="{% url "like_post" post.pk %}">
+    {% csrf_token %}
+    <button type="submit" name='postlike' value="{{post.id}}" class="btn bg-success-subtle">
+        Like
+    </button>
+    </form>
+    {% endif %}
+    
+</div>
+</div>
+    <p class='text-end'><a href='/home' class="btn btn-secondary">Home</a></p>  
+    
+    <script>
+      document.getElementById('id_post').value={{post.id}}
+   </script>
+
+{% endblock %}

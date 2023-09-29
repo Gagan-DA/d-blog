@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title%} Write Article   - {% endblock%}
+{% block content %}
+{% load static %}
+<div class="row justify-content-center pb-4">
+<div class="col-11">    
+    {% if user.is_authenticated and user.id is post.author.id  %}
+    <p class='display-5'>Delete Article</p>
+<p class='fs-5'>{{post.title}}</p>
+<form method="POST">
+{% csrf_token %}
+<p class='fs-6'>Are You Sure That You Want to Delete This Post </p>
+<button class='btn bg-primary-subtle text-primary'>Delete Article</button>
+</form>
+{% else %}
+<p class='alert alert-warning'> You don’t have authorization to view this page. </p>
+{% endif %}
+
+</div>
+</div>
+<p class='text-end'><a href='/home' class="btn btn-secondary">Home</a></p>   
+</div>
+ 
+{% endblock %}
